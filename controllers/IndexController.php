@@ -23,13 +23,12 @@ class RotatePicture_IndexController extends Omeka_Controller_AbstractActionContr
     $direction  = $this->getRequest()->getParam("direction");
     $file       = get_record_by_id("File", $file_id);
     $item_id    = metadata($file, "item_id");
-    
     if (!$pathToConvert = get_option('path_to_convert')) {
         throw new Omeka_File_Derivative_Exception(__('The ImageMagick directory path is missing.'));
     }
-    $imageRotator = new RotatePicture ($pathToConvert);
+    $imageRotator = new RotatePicture($pathToConvert);
+		// We start by rotating the original picture
     $imageRotator->rotate(FILES_DIR . '/' . $file->getStoragePath("original"), $direction);
-    
     // We have rotated the original file, we're going to generate all other sizes
     foreach ($this->_validDerivativeTypes as $type)
     {
