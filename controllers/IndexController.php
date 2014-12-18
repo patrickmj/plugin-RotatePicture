@@ -27,6 +27,8 @@ class RotatePicture_IndexController extends Omeka_Controller_AbstractActionContr
         throw new Omeka_File_Derivative_Exception(__('The ImageMagick directory path is missing.'));
     }
     $imageRotator = new RotatePicture($pathToConvert);
+    $strategy = $imageRotator->getStrategy();
+    $strategy->setOptions(array('path_to_convert' => $pathToConvert));
 		// We start by rotating the original picture
     $imageRotator->rotate(FILES_DIR . '/' . $file->getStoragePath("original"), $direction);
     // We have rotated the original file, we're going to generate all other sizes
